@@ -1,0 +1,260 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { formatDate } from '../utils/date.js';
+
+interface Props {
+  title: string;
+  description: string;
+  pubDate: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  readingTime?: number;
+}
+
+const { title, description, pubDate, updatedDate, tags = [], readingTime } = Astro.props;
+---
+
+<BaseLayout title={`${title} — santoshchandu.com`} description={description} article={true} pubDate={pubDate}>
+  <article class="post-article">
+    <!-- ── Post Header ─────────────────────────────────── -->
+    <header class="post-header">
+      <div class="content-container">
+        {tags.length > 0 && (
+          <div class="post-tags" aria-label="Tags">
+            {tags.map(tag => (
+              <a href={`/tag/${tag.toLowerCase()}`} class="tag">{tag}</a>
+            ))}
+          </div>
+        )}
+
+        <h1 class="post-title">{title}</h1>
+        <p class="post-description">{description}</p>
+
+        <div class="post-meta">
+          <time datetime={pubDate.toISOString()} class="post-date">
+            {formatDate(pubDate)}
+          </time>
+          {updatedDate && (
+            <span class="updated">
+              Updated <time datetime={updatedDate.toISOString()}>{formatDate(updatedDate)}</time>
+            </span>
+          )}
+          {readingTime && (
+            <span class="reading-time">{readingTime} min read</span>
+          )}
+        </div>
+      </div>
+
+      <div class="content-container">
+        <div class="post-divider"></div>
+      </div>
+    </header>
+
+    <!-- ── Post Body ──────────────────────────────────── -->
+    <div class="post-body content-container">
+      <slot />
+    </div>
+
+    <!-- ── Post Footer ────────────────────────────────── -->
+    <footer class="post-footer content-container">
+      <div class="post-footer-inner">
+        <a href="/" class="back-link">← Back to all posts</a>
+
+        <div class="share-info">
+          <p>Found this useful? Share the link — no tracking involved.</p>
+          <div class="subscribe-nudge">
+            <a href="/feed.xml" class="rss-button">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/>
+              </svg>
+              Subscribe via RSS
+            </a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </article>
+</BaseLayout>
+
+<style>
+/* ─── Post Header ──────────────────────────────────────────── */
+.post-article {
+  padding-bottom: 4rem;
+}
+
+.post-header {
+  padding: 3.5rem 0 0;
+  background: var(--paper);
+}
+
+.post-tags {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tag:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.post-title {
+  margin-bottom: 1rem;
+  font-size: clamp(2rem, 5.5vw, 3.8rem);
+  line-height: 1.08;
+  font-weight: 900;
+  letter-spacing: -0.025em;
+}
+
+.post-description {
+  font-size: 1.15rem;
+  color: var(--ink-muted);
+  font-style: italic;
+  font-weight: 300;
+  max-width: 60ch;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.post-meta {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  font-family: var(--font-body);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  margin-bottom: 2rem;
+}
+
+.post-date { color: var(--ink-muted); }
+.updated { font-style: italic; }
+.reading-time::before { content: '·'; margin-right: 1.25rem; }
+
+.post-divider {
+  height: 1px;
+  background: linear-gradient(90deg, var(--border-dark) 0%, transparent 70%);
+  margin-bottom: 3rem;
+}
+
+/* ─── Post Body ────────────────────────────────────────────── */
+.post-body {
+  padding-top: 0.5rem;
+}
+
+.post-body :global(h2) {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.post-body :global(h3) {
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.post-body :global(img) {
+  border-radius: 4px;
+  margin: 2rem auto;
+  border: 1px solid var(--border);
+}
+
+.post-body :global(table) {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin: 2rem 0;
+}
+
+.post-body :global(th),
+.post-body :global(td) {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--border);
+  text-align: left;
+}
+
+.post-body :global(th) {
+  background: var(--paper-warm);
+  font-weight: 600;
+  font-family: var(--font-display);
+}
+
+/* ─── Post Footer ──────────────────────────────────────────── */
+.post-footer {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.post-footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.back-link {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: color 0.15s;
+}
+
+.back-link:hover { color: var(--accent); }
+
+.share-info {
+  text-align: right;
+}
+
+.share-info p {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  font-style: italic;
+  margin-bottom: 0.6rem;
+}
+
+.subscribe-nudge { display: flex; justify-content: flex-end; }
+
+.rss-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  font-family: var(--font-body);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 0.3rem 0.8rem;
+  border-radius: 2px;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.rss-button:hover {
+  background: var(--accent);
+  color: white;
+}
+</style>

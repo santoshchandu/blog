@@ -1,0 +1,360 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { formatDate } from '../utils/date.ts';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const posts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const featured = posts[0];
+const rest = posts.slice(1);
+---
+
+<BaseLayout title="santoshchandu.com — AI & Dev developments">
+  <!-- ── Featured Post ──────────────────────────────────────── -->
+  <section class="featured-section">
+    <div class="container">
+      <div class="section-label">Latest</div>
+
+      <article class="featured-post">
+        <div class="featured-meta">
+          {featured.data.tags.map(tag => (
+            <a href={`/tag/${tag.toLowerCase()}`} class="tag">{tag}</a>
+          ))}
+          <time datetime={featured.data.pubDate.toISOString()}>
+            {formatDate(featured.data.pubDate)}
+          </time>
+        </div>
+
+        <h2 class="featured-title">
+          <a href={`/blog/${featured.slug}`}>{featured.data.title}</a>
+        </h2>
+
+        <p class="featured-description">{featured.data.description}</p>
+
+        <a href={`/blog/${featured.slug}`} class="read-link">
+          Read article →
+        </a>
+      </article>
+    </div>
+  </section>
+
+  <!-- ── Divider ────────────────────────────────────────────── -->
+  <div class="container">
+    <div class="section-divider">
+      <span class="divider-label">All posts</span>
+    </div>
+  </div>
+
+  <!-- ── Post List ──────────────────────────────────────────── -->
+  <section class="posts-section">
+    <div class="container">
+      <div class="posts-grid">
+        {rest.map((post) => (
+          <article class="post-card">
+            <div class="post-card-meta">
+              {post.data.tags.slice(0, 2).map(tag => (
+                <a href={`/tag/${tag.toLowerCase()}`} class="tag tag--sm">{tag}</a>
+              ))}
+              <time datetime={post.data.pubDate.toISOString()}>
+                {formatDate(post.data.pubDate)}
+              </time>
+            </div>
+
+            <h3 class="post-card-title">
+              <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+            </h3>
+
+            <p class="post-card-description">{post.data.description}</p>
+          </article>
+        ))}
+      </div>
+
+      {posts.length === 0 && (
+        <p class="empty-state">No posts yet. Check back soon.</p>
+      )}
+    </div>
+  </section>
+
+  <!-- ── Subscribe Banner ───────────────────────────────────── -->
+  <section class="container">
+    <div class="subscribe-banner">
+      <div class="subscribe-content">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" class="rss-icon" aria-hidden="true">
+          <path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/>
+        </svg>
+        <div>
+          <p class="subscribe-title">No email required</p>
+          <p class="subscribe-sub">Subscribe via RSS — read in any feed reader, no account needed.</p>
+        </div>
+      </div>
+      <a href="/feed.xml" class="subscribe-btn">
+        Get RSS feed →
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+/* ─── Featured Section ─────────────────────────────────────── */
+.featured-section {
+  padding: 3.5rem 0 3rem;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
+
+.featured-post {
+  max-width: 800px;
+}
+
+.featured-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.1rem;
+}
+
+.featured-meta time {
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+}
+
+.featured-title {
+  font-size: clamp(1.8rem, 4.5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.featured-title a {
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.featured-title a:hover {
+  color: var(--accent);
+}
+
+.featured-description {
+  font-size: 1.1rem;
+  color: var(--ink-muted);
+  max-width: 65ch;
+  line-height: 1.65;
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+
+.read-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 1px;
+  transition: gap 0.2s ease;
+  gap: 0.25rem;
+}
+
+.read-link:hover {
+  color: var(--accent-light);
+  border-color: var(--accent-light);
+  gap: 0.5rem;
+}
+
+/* ─── Tags ─────────────────────────────────────────────────── */
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid currentColor;
+  padding: 0.15rem 0.5rem;
+  border-radius: 2px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.tag:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.tag--sm {
+  font-size: 0.65rem;
+}
+
+/* ─── Divider ───────────────────────────────────────────────── */
+.section-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1rem 0 2.5rem;
+}
+
+.section-divider::before,
+.section-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.section-divider::before { max-width: 0; flex: 0; }
+.section-divider::after { flex: 1; }
+
+.divider-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+/* ─── Posts Grid ────────────────────────────────────────────── */
+.posts-section {
+  padding-bottom: 4rem;
+}
+
+.posts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 0;
+  border-top: 1px solid var(--border);
+}
+
+.post-card {
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+  padding-right: 2rem;
+  transition: background 0.1s;
+}
+
+.post-card:nth-child(even) {
+  padding-left: 2rem;
+  padding-right: 0;
+  border-left: 1px solid var(--border);
+}
+
+@media (max-width: 680px) {
+  .post-card,
+  .post-card:nth-child(even) {
+    padding-left: 0;
+    padding-right: 0;
+    border-left: none;
+  }
+}
+
+.post-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.post-card-meta time {
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+
+.post-card-title {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.65rem;
+  letter-spacing: -0.01em;
+}
+
+.post-card-title a {
+  color: var(--ink);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.post-card-title a:hover { color: var(--accent); }
+
+.post-card-description {
+  font-size: 0.92rem;
+  color: var(--ink-muted);
+  line-height: 1.6;
+  font-style: italic;
+  margin: 0;
+}
+
+.empty-state {
+  color: var(--ink-faint);
+  font-style: italic;
+  padding: 3rem 0;
+}
+
+/* ─── Subscribe Banner ──────────────────────────────────────── */
+.subscribe-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  background: var(--paper-warm);
+  border: 1px solid var(--border-dark);
+  border-left: 3px solid var(--accent);
+  padding: 1.5rem 2rem;
+  margin-bottom: 4rem;
+  border-radius: 0 4px 4px 0;
+}
+
+.subscribe-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.rss-icon { color: var(--accent); flex-shrink: 0; }
+
+.subscribe-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 0.2rem;
+}
+
+.subscribe-sub {
+  font-size: 0.82rem;
+  color: var(--ink-muted);
+  margin: 0;
+  font-style: italic;
+}
+
+.subscribe-btn {
+  white-space: nowrap;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  padding: 0.5rem 1.25rem;
+  border-radius: 2px;
+  transition: background 0.15s, color 0.15s;
+  letter-spacing: 0.02em;
+}
+
+.subscribe-btn:hover {
+  background: var(--accent);
+  color: white;
+}
+</style>

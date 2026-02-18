@@ -1,0 +1,119 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About — santoshchandu.com" description="About this blog and its author.">
+  <div class="about-page">
+    <div class="content-container">
+      <header class="page-header">
+        <div class="section-label">About</div>
+        <h1>About this blog</h1>
+      </header>
+
+      <div class="about-content">
+        <p>
+          This is a personal blog about things I find genuinely interesting in AI and software development.
+          Not takes for engagement. Not sponsored content. Just notes from someone paying attention.
+        </p>
+
+        <p>
+          I write when something strikes me as actually important — a model release that changes how I work,
+          a tool that meaningfully improves a workflow, a shift in the landscape that people are under-reacting to.
+          The pace is irregular. The quality is the goal.
+        </p>
+
+        <h2>What you'll find here</h2>
+        <p>
+          Posts fall into two main areas: AI developments (new models, research worth reading, practical usage patterns)
+          and developer tooling (runtimes, frameworks, protocols, build tools). Occasionally both at once.
+        </p>
+
+        <h2>Privacy</h2>
+        <p>
+          This blog has no analytics, no tracking pixels, no cookies, no ads, no affiliate links.
+          I don't know who reads this. That's intentional. Your attention is yours.
+        </p>
+        <p>
+          The RSS feed at <a href="/feed.xml">blog.santoshchandu.com/feed.xml</a> lets you subscribe
+          without giving anyone your email address. It's the best way to follow along.
+        </p>
+
+        <h2>Contact</h2>
+        <p>
+          You can reach me at <a href="mailto:hello@santoshchandu.com">hello@santoshchandu.com</a>.
+          I read every email and try to reply to most of them, though it may take a while.
+        </p>
+
+        <div class="colophon">
+          <p>
+            This site is built with <a href="https://astro.build">Astro</a>, hosted on
+            <a href="https://pages.cloudflare.com">Cloudflare Pages</a>.
+            Source code available on request.
+            Type set in Playfair Display and Source Serif 4.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+.about-page {
+  padding: 3.5rem 0 6rem;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.page-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.page-header h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+}
+
+.about-content {
+  max-width: 62ch;
+}
+
+.about-content p {
+  font-size: 1.05rem;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+
+.about-content h2 {
+  font-size: 1.4rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.about-content a {
+  color: var(--accent);
+}
+
+.colophon {
+  margin-top: 3.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.colophon p {
+  font-size: 0.82rem !important;
+  color: var(--ink-faint) !important;
+  font-style: italic;
+}
+</style>
