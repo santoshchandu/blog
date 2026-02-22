@@ -155,13 +155,39 @@ const years = Object.keys(byYear).sort((a, b) => Number(b) - Number(a));
 }
 
 @media (max-width: 600px) {
+  .archive-page {
+    padding: 2.5rem 0 4rem;
+  }
+
+  .page-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .year-heading {
+    font-size: 0.72rem;
+    margin-bottom: 0.75rem;
+  }
+
   .post-item {
     grid-template-columns: 1fr;
     gap: 0.4rem;
+    padding: 0.75rem 0;
+  }
+
+  .post-link {
+    font-size: 0.95rem;
   }
 
   .post-tags {
     justify-content: flex-start;
+    margin-top: 0.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-header h1 {
+    font-size: 1.85rem;
   }
 }
 </style>

@@ -34,6 +34,12 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 
+@media (max-width: 480px) {
+  html {
+    font-size: 16px;
+  }
+}
+
 body {
   background: var(--paper);
   color: var(--ink);
@@ -41,6 +47,7 @@ body {
   font-weight: 300;
   line-height: 1.75;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 /* ─── Typography ─────────────────────────────────────────────── */

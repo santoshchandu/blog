@@ -257,4 +257,68 @@ const { title, description, pubDate, updatedDate, tags = [], readingTime } = Ast
   background: var(--accent);
   color: white;
 }
+/* ─── Responsive ───────────────────────────────────────────── */
+@media (max-width: 680px) {
+  .post-header {
+    padding: 2.5rem 0 0;
+  }
+
+  .post-article {
+    padding-bottom: 3rem;
+  }
+
+  .post-title {
+    font-size: 2.25rem;
+    line-height: 1.15;
+    margin-bottom: 1.25rem;
+  }
+
+  .post-description {
+    font-size: 1rem;
+    line-height: 1.55;
+    margin-bottom: 1.75rem;
+  }
+
+  .post-meta {
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .post-footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2.5rem;
+  }
+
+  .share-info {
+    text-align: left;
+    width: 100%;
+  }
+
+  .subscribe-nudge {
+    justify-content: flex-start;
+  }
+
+  .rss-button {
+    width: 100%;
+    justify-content: center;
+    padding: 0.65rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .post-title {
+    font-size: 1.85rem;
+  }
+
+  .post-body :global(h2) {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+  }
+
+  .post-body :global(blockquote) {
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+  }
+}
 </style>
