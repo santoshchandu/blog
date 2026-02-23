@@ -5,7 +5,7 @@ pubDate: 2026-02-01
 tags: ["AI", "MCP", "Agents", "Dev"]
 ---
 
-In late 2024, Anthropic released the Model Context Protocol (MCP) — an open standard for connecting AI models to external tools and data sources. At the time it felt like an internal tooling decision made public.
+In late 2024, Anthropic released the Model Context Protocol (MCP)   an open standard for connecting AI models to external tools and data sources. At the time it felt like an internal tooling decision made public.
 
 Eight months later, it's looking more like infrastructure.
 
@@ -48,11 +48,11 @@ The result is that an MCP server written for Claude works with any MCP-compatibl
 
 The server ecosystem grew faster than expected:
 
-- **Filesystem** — read/write local files with permission controls
-- **GitHub** — search repos, read PRs, manage issues
-- **Postgres / SQLite** — query databases conversationally
-- **Slack, Linear, Notion** — company knowledge, tasks, docs
-- **Browser automation** — Puppeteer, Playwright bridges
+- **Filesystem**   read/write local files with permission controls
+- **GitHub**   search repos, read PRs, manage issues
+- **Postgres / SQLite**   query databases conversationally
+- **Slack, Linear, Notion**   company knowledge, tasks, docs
+- **Browser automation**   Puppeteer, Playwright bridges
 
 Most major dev tools either have official MCP servers or community ones that work well. If you use VS Code, Zed, or Cursor with AI features, there's a good chance MCP is under the hood.
 
@@ -60,7 +60,7 @@ Most major dev tools either have official MCP servers or community ones that wor
 
 USB-C is a good analogy because it's *boring in exactly the right way*. You don't think about USB-C. You just plug things in and they work.
 
-MCP is heading in that direction for AI tooling. The goal isn't for developers to think about the protocol — it's for them to never have to think about how their AI assistant connects to their tools again.
+MCP is heading in that direction for AI tooling. The goal isn't for developers to think about the protocol   it's for them to never have to think about how their AI assistant connects to their tools again.
 
 The interesting tension is **trust**. MCP servers run locally or remotely, and they have real permissions. A poorly configured MCP server is an attack surface. The community is still working through what a secure MCP deployment looks like at scale.
 
