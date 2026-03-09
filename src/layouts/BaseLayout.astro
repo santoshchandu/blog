@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Analytics from '@vercel/analytics/astro';
 
 interface Props {
   title: string;
@@ -56,6 +57,9 @@ const canonicalURL = new URL(Astro.url.pathname, siteUrl);
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
   <!-- Fonts: loaded via CSS -->
+
+  <!-- Vercel Web Analytics -->
+  <Analytics />
 </head>
 <body>
 
